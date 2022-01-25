@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Log</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general_style.css') }}">
+</head>
+<body>
+    <h1 class="text-center">Game Log</h1>
+    <form class="p-5 w-500 m-auto" action="{{ url_for('search') }}" method="POST">
+        <input class="m-b-5 p-5 w-500 border-1 border-radius-5" placeholder="What field to search for?" type="search" name="Field" autocomplete="off">
+        <br>
+        <input class="m-b-5 p-5 w-500 border-1 border-radius-5" placeholder="What should it include?" type="search" name="Search" autocomplete="off">
+        <br>
+        <button class="m-b-5 w-500 border-1 border-radius-5" type="submit">Test</button>
+    </form>
+    <div class="m-5 p-10 y-scroll h-500 border-1 border-radius-5">
+        <table>
+            {% for item in list_data %}
+                <tr>
+                {% if list_data[0] == item %}
+                    {% for subitem in item %}
+                        <th>{{ subitem }}</th>
+                    {% endfor %}
+                {% else %}
+                    {% for subitem in item %}
+                        <td>{{ subitem }}</td>
+                    {% endfor %}
+                {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

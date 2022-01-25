@@ -1,0 +1,81 @@
+import os
+import json
+from flask import (
+    Flask, render_template, request, session, redirect, url_for
+    )
+from flask_login import (
+    LoginManager, login_user, logout_user, current_user
+    )
+# Set up the required variables needed
+app = Flask(__name__)
+app.config["SECRET_KEY"] = "secret-key"
+
+fields = ["console", "series", "game_name", "classic", "quantity", "status"]
+consoles = ["3DS", "DS", "NES-P", "NES-U", "SNES", "Nintendo 64", "Game Cube", "Game Boy", "Xbox", "Xbox 360", "Xbox One", "Nintendo Switch", "PSP", "PlayStation", "PlayStation 2", "PlayStation 3", "PlayStation 4", "Wii", "Wii U", "Sega MS", "Sega MD"]
+field_cap = [20, 52, 0, 52, 6, 2, 2]
+
+
+@app.route("/")
+def index():
+    list_data = list_game("name", "")
+    return render_template("index.html", list_data=(list_data))
+
+
+@app.route("/Q", methods=["POST"])
+def search():
+    contains = request.form.get("Search")
+    field = request.form.get("Field")
+    if contains is None:
+        contains = ""
+    list_data = list_game(field, contains)
+    return render_template("index.html", list_data=(list_data), fields=(fields))
+
+
+def list_game(field="", contains="", reverse=False, file="game_log.json"):
+    json_list = json.load(open("data/"+file, "r+"))
+    temp_list = []
+
+    for i in range(0, len(fields)):
+        if field in fields[i]:
+            field = fields[i]
+    altered = False
+    for i in range(0, len(json_list)):
+        item = []
+        try:
+            if field in json_list[str(i)] and contains.lower() in json_list[str(i)][field].lower():
+                altered = True
+            else:
+                altered = False
+        except:
+            if field in json_list[str(i)] and str(contains) == str(json_list[str(i)][field]):
+                altered = True
+            else:
+                altered = False
+        if altered:
+            item.append(str(json_list[str(i)][field]))
+            for j in range(0, len(fields)):
+                if field != fields[j] and fields[j] in json_list[str(i)]:
+                    item.append(str(json_list[str(i)][fields[j]]))
+            temp_list.append(item)
+
+    temp_list.sort(reverse=bool(reverse))
+    if len(temp_list) > 0:
+        if field in "game_name":
+            temp_list.insert(0, ["Game Name", "Console", "Series", "Classic", "Quantity", "Status"])
+        elif field in "console":
+            temp_list.insert(0, ["Console", "Series", "Game Name", "Classic", "Quantity", "Status"])
+        elif field in "status":
+            temp_list.insert(0, ["Status", "Console", "Series", "Game Name", "Classic", "Quantity"])
+        elif field in "quantity":
+            temp_list.insert(0, ["Quantity", "Console", "Series", "Game Name", "Classic", "Status"])
+    else:
+        temp_list.insert(len(temp_list), "The entry you have given cannot find any result.")
+    return temp_list
+
+if __name__ == "__main__":
+    # Main function which sets up the app and .run variables/condit
+    app.run(
+        host=os.environ.get(
+            "IP", "0.0.0.0"), port=int(
+                os.environ.get(
+                    "PORT", "5000")), debug=True)
