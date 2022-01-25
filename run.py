@@ -68,6 +68,8 @@ def list_game(field="", contains="", reverse=False, file="game_log.json"):
             temp_list.insert(0, ["Status", "Console", "Series", "Game Name", "Classic", "Quantity"])
         elif field in "quantity":
             temp_list.insert(0, ["Quantity", "Console", "Series", "Game Name", "Classic", "Status"])
+        elif field in "series":
+            temp_list.insert(0, ["Series", "Console", "Game Name", "Classic", "Quantity", "Status"])
     else:
         temp_list.insert(len(temp_list), "The entry you have given cannot find any result.")
     return temp_list
