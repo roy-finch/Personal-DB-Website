@@ -1,5 +1,6 @@
 import os
 import json
+import random
 from flask import (
     Flask, render_template, request, session, redirect, url_for
     )
@@ -66,6 +67,7 @@ def edit_item():
         return product(item)
 
 
+@app.route("/product", methods=["POST"])
 def product(item):
     list_data = item
     return render_template("product.html", list_data=(list_data), fields=(fields))
