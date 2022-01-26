@@ -77,12 +77,6 @@ def edit():
     return render_template("edit_item.html", list_data=(list_data))
 
 
-@app.route("/edit_item", methods=["POST"])
-def edit_item():
-    item = request.form.get("Item")
-    list_data = list_game("name", item)
-
-
 @app.route("/Q", methods=["POST"])
 def search():
     contains = request.form.get("Search")
