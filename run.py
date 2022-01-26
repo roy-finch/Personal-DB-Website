@@ -23,14 +23,46 @@ def index():
 
 @app.route("/random")
 def index():
-    list_data = list_game("name", "")
+    list_data = random_game(10, 0)
     return render_template("random.html", list_data=(list_data))
+
+
+@app.route("/random_item", methods=["POST"])
+def random_game(x, status=0):
+    json_list = json.load(open("game_log.json", "r+"))
+    temp_list = []
+
+    x = request.form.get("Random")
+
+    if x is None:
+        x = 10
+
+    return temp_list
+
+
+def random_obj():
+    for n in range(0, x):
+        while x > 0:
+            r = random.randint(0, len(json_list)-1)
+            if status > 0 and json_list[str(r)]["status"] == status:
+                temp_list.append([json_list[str(r)]["console"], json_list[str(r)]["game_name"]])
+                x = x-1
+            elif status == 0:
+                temp_list.append([json_list[str(r)]["console"], json_list[str(r)]["game_name"]])
+                x = x-1
+    temp_list.insert(0, ["Game Name", "Console"])
 
 
 @app.route("/edit")
 def index():
     list_data = list_game("name", "")
     return render_template("edit_item.html", list_data=(list_data))
+
+
+@app.route("/edit_item", methods=["POST"])
+def edit_item():
+    item = request.form.get("Item")
+    list_data = list_game("name", item)
 
 
 @app.route("/Q", methods=["POST"])
