@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-center">Game Log</h1>
+<form class="p-5 w-500 m-auto" action="{{ url_for('random_item') }}" method="POST">
+    {% for item in list_data %}
+        <label for="{{ fields[loop.index-1] }}">{{ fields[loop.index-1] }}</lable>
+        <input name="{{ item }}">{{ item }}</input>
+    {% endfor %}
+    <button class="m-b-5 w-500 border-1 border-radius-5" type="submit">Test</button>
+</form>

@@ -54,6 +54,23 @@ def random_obj():
     return temp_list
 
 
+@app.route("/edit_item", methods=["POST"])
+def edit_item():
+    item = request.form.get("Item")
+
+    if item is None:
+        item = []
+        return product(item)
+    else:
+        item = list_game("name", item)
+        return product(item)
+
+
+def product(item):
+    list_data = item
+    return render_template("product.html", list_data=(list_data), fields=(fields))
+
+
 @app.route("/edit")
 def edit():
     list_data = list_game("name", "")

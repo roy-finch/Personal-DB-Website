@@ -3,8 +3,8 @@
 {% block content %}
 <h1 class="text-center">Game Log</h1>
 <div class="m-5 p-10 y-scroll h-500 border-1 border-radius-5">
-    <form class="p-5 w-500 m-auto" action="{{ url_for('random_item') }}" method="POST">
-        <select>
+    <form class="p-5 w-500 m-auto" action="{{ url_for('edit_item') }}" method="POST">
+        <select name="Item">
             {% for item in list_data %}
                 <option value="{{ item.game_name }}">
                 {% for subitem in item %}
@@ -13,6 +13,7 @@
                 </option>
             {% endfor %}
         </select>
+        <button type="submit">Submit</button>
     </form>
 </div>
 <p class="text-center">There are {{ list_data|length }} results from the given search.</p>
