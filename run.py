@@ -29,18 +29,20 @@ def random():
 
 @app.route("/random_item", methods=["POST"])
 def random_game(x, status=0):
-    json_list = json.load(open("game_log.json", "r+"))
-    temp_list = []
-
     x = request.form.get("Random")
 
     if x is None:
         x = 10
+    
+    list_data = random(x, 0)
+    return render_template("random.html", list_data=(list_data))
 
-    return temp_list
+    
 
 
 def random_obj():
+    json_list = json.load(open("data/game_log.json", "r+"))
+    temp_list = []
     for n in range(0, x):
         while x > 0:
             r = random.randint(0, len(json_list)-1)
@@ -51,6 +53,7 @@ def random_obj():
                 temp_list.append([json_list[str(r)]["console"], json_list[str(r)]["game_name"]])
                 x = x-1
     temp_list.insert(0, ["Game Name", "Console"])
+    return temp_list
 
 
 @app.route("/edit")
