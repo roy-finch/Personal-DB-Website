@@ -22,7 +22,7 @@ def index():
 
 
 @app.route("/random")
-def index():
+def random():
     list_data = random_game(10, 0)
     return render_template("random.html", list_data=(list_data))
 
@@ -54,7 +54,7 @@ def random_obj():
 
 
 @app.route("/edit")
-def index():
+def edit():
     list_data = list_game("name", "")
     return render_template("edit_item.html", list_data=(list_data))
 
