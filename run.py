@@ -28,7 +28,7 @@ def random():
 
 
 @app.route("/random_item", methods=["POST"])
-def random_game(x, status=0):
+def random_game():
     x = request.form.get("Random")
 
     if x is None:
@@ -38,7 +38,7 @@ def random_game(x, status=0):
     return render_template("random.html", list_data=(list_data))
 
 
-def random_obj():
+def random_obj(x, status=0):
     json_list = json.load(open("data/game_log.json", "r+"))
     temp_list = []
     for n in range(0, x):
