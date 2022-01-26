@@ -21,6 +21,18 @@ def index():
     return render_template("index.html", list_data=(list_data))
 
 
+@app.route("/random")
+def index():
+    list_data = list_game("name", "")
+    return render_template("random.html", list_data=(list_data))
+
+
+@app.route("/edit")
+def index():
+    list_data = list_game("name", "")
+    return render_template("edit_item.html", list_data=(list_data))
+
+
 @app.route("/Q", methods=["POST"])
 def search():
     contains = request.form.get("Search")
