@@ -23,7 +23,7 @@ def index():
 
 @app.route("/random")
 def random():
-    list_data = random_game(10, 0)
+    list_data = random_obj(10, 0)
     return render_template("random.html", list_data=(list_data))
 
 
@@ -34,10 +34,8 @@ def random_game(x, status=0):
     if x is None:
         x = 10
     
-    list_data = random(x, 0)
+    list_data = random_obj(x, 0)
     return render_template("random.html", list_data=(list_data))
-
-    
 
 
 def random_obj():
