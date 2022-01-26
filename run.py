@@ -60,14 +60,14 @@ def edit_item():
     item = request.form.get("Item")
 
     if item is None:
-        item = []
+        item = ["", "", "", "", "", ""]
         return product(item)
     else:
         item = list_game("name", item)
         return product(item)
 
 
-@app.route("/product", methods=["POST"])
+@app.route("/product")
 def product(item):
     list_data = item
     return render_template("product.html", list_data=(list_data), fields=(fields))
