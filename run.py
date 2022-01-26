@@ -29,7 +29,7 @@ def random():
 
 
 @app.route("/random_item", methods=["POST"])
-def random_game():
+def random_item():
     x = request.form.get("Random")
 
     if x is None:
@@ -58,24 +58,35 @@ def random_obj(x, status=0):
 @app.route("/edit_item", methods=["POST"])
 def edit_item():
     item = request.form.get("Item")
-
-    if item is None:
-        item = ["", "", "", "", "", ""]
-        return product(item)
+    print(item)
+    if item is "new_product":
+        return redirect("/new_product")
     else:
         item = list_game("name", item)
-        return product(item)
+        item.pop(0)
+        return redirect("/"+item[0][0].replace(" ", "_"))
 
 
-@app.route("/product")
-def product(item):
-    list_data = item
+@app.route("/<game_name>")
+def product(game_name):
+    if game_name is None:
+        return redirect("/")
+    else:
+        list_data = list_game("name", game_name.replace("_", " "))
+    list_data.pop(0)
+    return render_template("product.html", list_data=(list_data), fields=(fields))
+
+
+@app.route("/new_product")
+def new_product():
+    list_data = ["", "", "", "", "", ""]
     return render_template("product.html", list_data=(list_data), fields=(fields))
 
 
 @app.route("/edit")
 def edit():
     list_data = list_game("name", "")
+    list_data.pop(0)
     return render_template("edit_item.html", list_data=(list_data))
 
 

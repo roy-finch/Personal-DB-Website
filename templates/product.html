@@ -4,9 +4,13 @@
 <h1 class="text-center">Game Log</h1>
 <form class="p-5 w-500 m-auto" action="{{ url_for('random_item') }}" method="POST">
     {% for item in list_data %}
-        <label for="{{ fields[loop.index-1] }}">{{ fields[loop.index-1] }}</lable>
-        <input name="{{ item }}">{{ item }}</input>
+        {% for sub in item %}
+            <p class="text-center">{{ fields[loop.index-1] }}:</label>
+            <br>
+            <input class="p-5 m-auto w-500" name="{{ sub }}" value="{{ sub }}"></input>
+            <br>
+        {% endfor %}
     {% endfor %}
-    <button class="m-b-5 w-500 border-1 border-radius-5" type="submit">Test</button>
+    <button class="m-b-5 m-l-7 w-500 border-1 border-radius-5" type="submit">Submit</button>
 </form>
 {% endblock %}

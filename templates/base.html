@@ -9,11 +9,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general_style.css') }}">
 </head>
 <body>
-    <div class="m-auto">
-        <a class="a-none" href="{{ url_for('index') }}">Home</a>
-        <a class="a-none" href="{{ url_for('random') }}">Random Item</a>
-        <a class="a-none" href="{{ url_for('edit') }}">Edit</a>
-    </div>
     {% block content %}
     {% endblock %}
 </body>
